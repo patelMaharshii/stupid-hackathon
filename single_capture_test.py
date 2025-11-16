@@ -61,10 +61,7 @@ while True:
                 
             cv2.putText(frame_resized, f'Fingers: {fingers_up}', (50, 100), 
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
-            # if thumb_up == 1:
-            #     cv2.putText(frame_resized, 'Thumb: 1', (50, 150), 
-            #                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
-                
+
             print(f"Detected Fingers, Thumb: {fingers_up},{thumb_up}")
 
         else:
