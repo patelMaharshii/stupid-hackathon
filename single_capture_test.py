@@ -52,18 +52,21 @@ while True:
         results = hands.process(cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB))
         
         if results.multi_hand_landmarks:
+            fingers_up = 0
+            thumb_up = 0
             for hand_landmarks in results.multi_hand_landmarks:
                 mp_draw.draw_landmarks(frame_resized, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-                fingers_up = count_fingers(hand_landmarks)
-                thumb_up = detect_thumb(hand_landmarks)
+                fingers_up += count_fingers(hand_landmarks)
+                thumb_up += detect_thumb(hand_landmarks)
                 
-                cv2.putText(frame_resized, f'Fingers: {fingers_up}', (50, 100), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
-                if thumb_up == 1:
-                    cv2.putText(frame_resized, 'Thumb: 1', (50, 150), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            cv2.putText(frame_resized, f'Fingers: {fingers_up}', (50, 100), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+            if thumb_up == 1:
+                cv2.putText(frame_resized, 'Thumb: 1', (50, 150), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
                 
-                print(f"Detected Fingers, Thumb: {fingers_up},{thumb_up}")
+            print(f"Detected Fingers, Thumb: {fingers_up},{thumb_up}")
+
         else:
             print("No hands detected.")
         
